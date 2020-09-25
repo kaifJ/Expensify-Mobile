@@ -4,7 +4,8 @@ import {
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
   LOGOUT,
-  SET_LOADING
+  SET_LOADING,
+  SET_EXPENSE_LOADING
 } from './types'
 import setAuthToken from '../utils/setAuthToken'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -12,7 +13,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 const initialState = {
   isAuthenticated: false,
   token: null,
-  loading: false
+  loading: false,
+  expensesLoading: false
 }
 
 export default function(state = initialState, action) {
@@ -21,6 +23,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: action.loading
+      }
+
+    case SET_EXPENSE_LOADING:
+      return {
+        ...state,
+        expensesLoading: action.loading
       }
 
     case LOGIN_SUCCESS:

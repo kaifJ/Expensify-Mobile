@@ -4,7 +4,8 @@ import {
   LOGOUT,
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
-  SET_LOADING
+  SET_LOADING,
+  SET_EXPENSE_LOADING
 } from '../reducers/types'
 import axios from 'axios'
 
@@ -103,6 +104,13 @@ export const logout = () => async dispatch => {
 export const setLoading = loading => dispatch => {
   dispatch({
     type: SET_LOADING,
+    loading
+  })
+}
+
+export const setExpenseLoading = loading => dispatch => {
+  dispatch({
+    type: SET_EXPENSE_LOADING,
     loading
   })
 }

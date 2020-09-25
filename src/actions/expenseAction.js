@@ -3,11 +3,10 @@ import {
   LOAD_EXPENSE_SUCCESS,
   DELETE_EXPENSE_SUCCESS,
   EDIT_EXPENSE_SUCCESS,
-  LOAD_MONTHLY_EXPENSES,
-  SET_LOADING
+  LOAD_MONTHLY_EXPENSES
 } from '../reducers/types'
 // import { setAlert } from '../actions/alert'
-import { setLoading } from '../actions/authAction'
+import { setExpenseLoading } from '../actions/authAction'
 import axios from 'axios'
 import moment from 'moment'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -89,28 +88,25 @@ export const deleteExpense = id => async dispatch => {
 }
 
 export const loadExpenses = () => async dispatch => {
-  // dispatch(setLoading(true))
+  dispatch(setExpenseLoading(true))
   try {
     const params = {
       year: moment().year(),
       month: moment().month()
     }
-
+    debugger
     if (!axios.default.headers) {
+      debugger
       let userToken = await AsyncStorage.getItem('token')
       await setAuthToken(userToken)
     }
-
+    debugger
     let res = await axios.get(
       'https://calm-hollows-17096.herokuapp.com/api/expense',
       { params }
     )
     debugger
-    // dispatch(setLoading(false))
-    dispatch({
-      type: SET_LOADING,
-      loading: false
-    })
+    dispatch(setExpenseLoading(false))
     dispatch({
       type: LOAD_EXPENSE_SUCCESS,
       payload: { expenses: res.data.expenses }
@@ -122,7 +118,7 @@ export const loadExpenses = () => async dispatch => {
 }
 
 export const loadMonthlyExpenses = payload => async dispatch => {
-  dispatch(setLoading(true))
+  dispatch(setExpenseLoading(true))
   try {
     const params = {
       year: payload.year,
@@ -133,7 +129,7 @@ export const loadMonthlyExpenses = payload => async dispatch => {
       { params }
     )
 
-    dispatch(setLoading(false))
+    dispatch(setExpenseLoading(false))
     dispatch({
       type: LOAD_MONTHLY_EXPENSES,
       payload: { expenses: res.data.expenses }

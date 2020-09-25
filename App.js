@@ -11,14 +11,15 @@ import {
   Spinner
 } from './src/components'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { connect } from 'react-redux'
+import { Snackbar } from 'react-native-paper'
+import { loadExpenses } from './src/actions/expenseAction'
 
 class App extends Component {
   state = {
     token: this.props.token,
-    loading: this.props.token,
+    loading: this.props.token || true,
     isAuthenticated: this.props.isAuthenticated
   }
 
@@ -26,7 +27,7 @@ class App extends Component {
     try {
       let userToken = await AsyncStorage.getItem('token')
       userToken = userToken === undefined || userToken === null ? '' : userToken
-
+      if (userToken) this.props.loadExpenses()
       await setAuthToken(userToken)
       this.setState({
         token: userToken,
@@ -59,6 +60,12 @@ class App extends Component {
           }}
         >
           <ActivityIndicator size="large" color="#000000" />
+          <Snackbar
+            visible={this.state.loading || this.props.loading}
+            duration={5000}
+          >
+            Loading...
+          </Snackbar>
         </View>
       )
     jsxToReturn = !(this.state.token || this.props.token) ? (
@@ -88,4 +95,4 @@ const mapStateToProps = ({ auth }) => ({
   token: auth.token
 })
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, { loadExpenses })(App)
