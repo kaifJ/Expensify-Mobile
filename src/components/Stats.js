@@ -1,8 +1,14 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { View, Text } from 'react-native'
+import Header from './Header'
 
 const Stats = () => {
-  return <Text>Stats</Text>
+  return (
+    <View style={{ flex: 1, flexDirection: 'column' }}>
+      <Header title={'Statistics'} />
+      <Text>Stats</Text>
+    </View>
+  )
 }
 
 export default Stats

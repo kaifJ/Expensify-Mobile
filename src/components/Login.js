@@ -17,8 +17,6 @@ function Login({ navigation, login }) {
   }
 
   const onLogin = () => {
-    let f = formData
-    debugger
     login(formData)
   }
 
