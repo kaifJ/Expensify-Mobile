@@ -27,6 +27,7 @@ function Login({ navigation, login }) {
       <TextInput
         id="email"
         autoCapitalize="none"
+        textContentType="emailAddress"
         placeholder={'Email'}
         value={formData.email}
         onChange={e => _onChange(e, 'email')}
@@ -34,6 +35,7 @@ function Login({ navigation, login }) {
       <TextInput
         id="password"
         value={formData.password}
+        textContentType="password"
         autoCapitalize="none"
         onChange={e => _onChange(e, 'password')}
         placeholder={'Password'}

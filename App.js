@@ -1,8 +1,15 @@
 import React, { useEffect, Component } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import setAuthToken from './src/utils/setAuthToken'
-import { Login, Register, Dashboard, Stats, User } from './src/components'
+import {
+  Login,
+  Register,
+  Dashboard,
+  Stats,
+  User,
+  Spinner
+} from './src/components'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -39,12 +46,21 @@ class App extends Component {
 
   render() {
     let jsxToReturn
-    const Stack = createStackNavigator()
     const Tab = createBottomTabNavigator()
 
     if (this.state.loading || this.props.loading)
-      return <Text>Loading.....</Text>
-
+      return (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'green'
+          }}
+        >
+          <ActivityIndicator size="large" color="#000000" />
+        </View>
+      )
     jsxToReturn = !(this.state.token || this.props.token) ? (
       <NavigationContainer>
         <Tab.Navigator>
