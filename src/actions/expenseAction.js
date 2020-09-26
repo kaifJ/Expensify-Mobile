@@ -51,19 +51,19 @@ export const addExpense = (
   }
 
   const body = JSON.stringify({ title, description, amount, category, date })
-  debugger
+
   try {
     const res = await axios.post(
       'https://calm-hollows-17096.herokuapp.com/api/expense',
       body,
       config
     )
-    debugger
+
     dispatch({
       type: ADDEXPENSE_SUCCESS,
       payload: { expense: res.data.expense, selectedDate }
     })
-    debugger
+
     dispatch(toggleModal({ toggle: false }))
     // history.push('/dashboard')
     // dispatch(setAlert('Expense Added', 'success'))

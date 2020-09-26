@@ -4,13 +4,29 @@ import Fab from './Fab'
 // import SearchBar from './Searchbar'
 import moment from 'moment'
 import { toggleModal } from '../actions/modalAction'
-import { View, Text, FlatList, SafeAreaView } from 'react-native'
+import { deleteExpense } from '../actions/expenseAction'
+import { View, Text, FlatList, SafeAreaView, Alert } from 'react-native'
 import { Card, Title, Button } from 'react-native-paper'
 
 const ExpenseList = props => {
   let renderItem = ({ item }) => {
     let editForm = () => {
       props.toggleModal({ toggle: true, modalId: item._id, formType: 'edit' })
+    }
+
+    let onDelete = () => {
+      debugger
+      Alert.alert('Delete Expense ?', '', [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'OK',
+          onPress: () => props.deleteExpense(item._id)
+        }
+      ])
     }
 
     return (
@@ -40,7 +56,7 @@ const ExpenseList = props => {
               <Button
                 style={{ backgroundColor: '#f44336' }}
                 mode="contained"
-                onPress={() => alert('Delete')}
+                onPress={onDelete}
               >
                 Delete
               </Button>
@@ -80,4 +96,6 @@ const mapStateToProps = state => ({
   loading: state.auth.expensesLoading
 })
 
-export default connect(mapStateToProps, { toggleModal })(ExpenseList)
+export default connect(mapStateToProps, { toggleModal, deleteExpense })(
+  ExpenseList
+)

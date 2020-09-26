@@ -1,15 +1,8 @@
-import React, { useEffect, Component } from 'react'
+import React, { Component } from 'react'
 import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import setAuthToken from './src/utils/setAuthToken'
-import {
-  Login,
-  Register,
-  Dashboard,
-  Stats,
-  User,
-  Spinner
-} from './src/components'
+import { Login, Register, Dashboard, Stats, User } from './src/components'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { connect } from 'react-redux'

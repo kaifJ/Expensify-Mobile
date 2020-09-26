@@ -24,7 +24,7 @@ class ExpenseForm extends React.Component {
 
   onFormSubmit = () => {
     this.setState({ buttonLoading: true })
-    debugger
+
     let formData = {
       title: this.state.title,
       description: this.state.description,
@@ -32,7 +32,7 @@ class ExpenseForm extends React.Component {
       date: this.state.date.format(),
       category: this.state.category
     }
-    debugger
+
     this.props.formType === 'edit'
       ? this.props.editExpense(formData, this.props.expense._id)
       : this.props.addExpense(formData, moment())
