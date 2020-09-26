@@ -56,7 +56,7 @@ class App extends Component {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'green'
+            backgroundColor: '#4CAF50'
           }}
         >
           <ActivityIndicator size="large" color="#000000" />
