@@ -5,7 +5,7 @@ import {
   EDIT_EXPENSE_SUCCESS,
   LOAD_MONTHLY_EXPENSES
 } from '../reducers/types'
-import * as moment from 'moment'
+import moment from 'moment'
 
 const initialState = []
 

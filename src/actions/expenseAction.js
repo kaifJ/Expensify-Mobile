@@ -6,6 +6,7 @@ import {
   LOAD_MONTHLY_EXPENSES
 } from '../reducers/types'
 // import { setAlert } from '../actions/alert'
+import { toggleModal } from '../actions/modalAction'
 import { setExpenseLoading } from '../actions/authAction'
 import axios from 'axios'
 import moment from 'moment'
@@ -31,7 +32,8 @@ export const editExpense = (updatedExpense, id, history) => async dispatch => {
       type: EDIT_EXPENSE_SUCCESS,
       payload: { expense: res.data.expense }
     })
-    history.push('/dashboard')
+    dispatch(toggleModal({ toggle: false }))
+    // history.push('/dashboard')
     // dispatch(setAlert('Expense Updated', 'edit'))
   } catch (error) {
     // dispatch(setAlert('Some Error Look into this', 'danger'))
@@ -40,7 +42,6 @@ export const editExpense = (updatedExpense, id, history) => async dispatch => {
 
 export const addExpense = (
   { title, description, amount, category, date },
-  history,
   selectedDate
 ) => async dispatch => {
   const config = {
@@ -50,18 +51,21 @@ export const addExpense = (
   }
 
   const body = JSON.stringify({ title, description, amount, category, date })
-
+  debugger
   try {
     const res = await axios.post(
       'https://calm-hollows-17096.herokuapp.com/api/expense',
       body,
       config
     )
+    debugger
     dispatch({
       type: ADDEXPENSE_SUCCESS,
       payload: { expense: res.data.expense, selectedDate }
     })
-    history.push('/dashboard')
+    debugger
+    dispatch(toggleModal({ toggle: false }))
+    // history.push('/dashboard')
     // dispatch(setAlert('Expense Added', 'success'))
   } catch (error) {
     let errors = error.response.data.errors

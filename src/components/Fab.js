@@ -1,7 +1,13 @@
 import React from 'react'
 import { FAB } from 'react-native-paper'
+import { connect } from 'react-redux'
+import { toggleModal } from '../actions/modalAction'
 
-const Fab = () => {
+const Fab = ({ toggleModal }) => {
+  const showModal = () => {
+    toggleModal({ toggle: true })
+  }
+
   return (
     <FAB
       style={{
@@ -12,9 +18,9 @@ const Fab = () => {
       }}
       animated
       label="Add Expense"
-      onPress={() => alert('Pressed')}
+      onPress={showModal}
     />
   )
 }
 
-export default Fab
+export default connect(null, { toggleModal })(Fab)

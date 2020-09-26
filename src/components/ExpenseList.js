@@ -1,15 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Fab from './Fab'
-// import SearchComponent from './SearchBar'
-import { Searchbar } from 'react-native-paper'
+// import SearchBar from './Searchbar'
 import moment from 'moment'
+import { toggleModal } from '../actions/modalAction'
 import { View, Text, FlatList, SafeAreaView } from 'react-native'
 import { Card, Title, Button } from 'react-native-paper'
 
 const ExpenseList = props => {
   let renderItem = ({ item }) => {
-    debugger
+    let editForm = () => {
+      props.toggleModal({ toggle: true, modalId: item._id, formType: 'edit' })
+    }
+
     return (
       <Card style={{ marginVertical: 5, backgroundColor: '#DCDCDC' }}>
         <Card.Content>
@@ -30,14 +33,14 @@ const ExpenseList = props => {
               <Button
                 style={{ backgroundColor: '#00a2ed', marginBottom: 10 }}
                 mode="contained"
-                onPress={() => alert('Edit')}
+                onPress={editForm}
               >
                 Edit
               </Button>
               <Button
                 style={{ backgroundColor: '#f44336' }}
                 mode="contained"
-                onPress={() => alert('Edit')}
+                onPress={() => alert('Delete')}
               >
                 Delete
               </Button>
@@ -57,10 +60,10 @@ const ExpenseList = props => {
       </View>
     )
   } else {
-    debugger
     return (
       <SafeAreaView style={{ flex: 1, flexDirection: 'column' }}>
-        <Searchbar placeholder="Search" icon="plus" />
+        {/* <SearchBar /> */}
+
         <Fab />
         <FlatList
           data={expenses}
@@ -77,4 +80,4 @@ const mapStateToProps = state => ({
   loading: state.auth.expensesLoading
 })
 
-export default connect(mapStateToProps, {})(ExpenseList)
+export default connect(mapStateToProps, { toggleModal })(ExpenseList)
