@@ -13,7 +13,9 @@ const Header = props => {
         width: '100%'
       }}
     >
-      <Text style={{ color: 'white', fontSize: 18 }}>{props.title}</Text>
+      <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+        {props.title}
+      </Text>
     </View>
   )
 }
