@@ -8,6 +8,7 @@ import {
   SET_EXPENSE_LOADING
 } from '../reducers/types'
 import axios from 'axios'
+import { loadExpenses } from '../actions/expenseAction'
 
 export const register = ({ name, email, password }) => async dispatch => {
   dispatch({
@@ -68,18 +69,14 @@ export const login = ({ email, password }) => async dispatch => {
 
     dispatch({
       type: 'SET_LOADING',
-      loading: true
+      loading: false
     })
 
     dispatch({
       type: LOGIN_SUCCESS,
       payload: { token: res.data.token }
     })
-    //    dispatch({
-    //        type: SET_LOADING,
-    //        loading: true
-    //    })
-    //    dispatch(loadExpenses())
+    dispatch(loadExpenses())
   } catch (error) {
     const errorMsg = error.response.data
     // dispatch(setAlert(errorMsg, 'danger'))

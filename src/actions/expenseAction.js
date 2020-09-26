@@ -94,18 +94,17 @@ export const loadExpenses = () => async dispatch => {
       year: moment().year(),
       month: moment().month()
     }
-    debugger
+
     if (!axios.default.headers) {
-      debugger
       let userToken = await AsyncStorage.getItem('token')
       await setAuthToken(userToken)
     }
-    debugger
+
     let res = await axios.get(
       'https://calm-hollows-17096.herokuapp.com/api/expense',
       { params }
     )
-    debugger
+
     dispatch(setExpenseLoading(false))
     dispatch({
       type: LOAD_EXPENSE_SUCCESS,

@@ -5,7 +5,7 @@ const Header = props => {
   return (
     <View
       style={{
-        backgroundColor: 'blue',
+        backgroundColor: '#20222b',
         height: 80,
         flexDirection: 'column',
         justifyContent: 'flex-end',
