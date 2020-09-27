@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { View, TextInput, Button } from 'react-native'
+import { View, Text } from 'react-native'
+import { TextInput, Button, HelperText } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { register } from '../actions/authAction'
 import isEmail from 'validator/lib/isEmail'
@@ -13,9 +14,16 @@ function Register({ navigation, register }) {
   })
 
   let onRegister = () => {
-    if (!isEmail(formData.email)) alert('Please Enter a valid email id')
+    if (!isEmail(formData.email)) return alert('Please Enter a valid email')
+    if (
+      formData.username.length === 0 ||
+      formData.email.length === 0 ||
+      formData.password1.length === 0 ||
+      formData.password2.length === 0
+    )
+      return alert('Please Fill all the required fields')
     if (formData.password1 !== formData.password2) {
-      alert('Passwords Do not match')
+      return alert('Passwords Do not match')
     } else {
       register({
         email: formData.email,
@@ -25,45 +33,101 @@ function Register({ navigation, register }) {
     }
   }
 
-  let _onChange = (event, name) => {
+  const _onChange = (text, name) => {
     setFormData({
       ...formData,
-      [name]: event.nativeEvent.text
+      [name]: text
     })
   }
 
+  const hasErrors = field => {
+    if (field === 'email') {
+      return !isEmail(formData[field])
+    }
+    return formData[field].length === 0
+  }
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <TextInput
-        id="username"
-        placeholder={'UserName'}
-        value={formData.username}
-        onChange={e => _onChange(e, 'username')}
-      />
-      <TextInput
-        id="email"
-        value={formData.email}
-        autoCapitalize="none"
-        onChange={e => _onChange(e, 'email')}
-        placeholder={'Email'}
-      />
-      <TextInput
-        id="password1"
-        value={formData.password1}
-        autoCapitalize="none"
-        onChange={e => _onChange(e, 'password1')}
-        placeholder={'Password'}
-        secureTextEntry={true}
-      />
-      <TextInput
-        id="password2"
-        value={formData.password2}
-        autoCapitalize="none"
-        onChange={e => _onChange(e, 'password2')}
-        placeholder={'Confirm Password'}
-        secureTextEntry={true}
-      />
-      <Button title="Register" onPress={onRegister} />
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        backgroundColor: '#4CAF50'
+      }}
+    >
+      <View style={{ alignItems: 'center', marginBottom: 20 }}>
+        <Text style={{ fontSize: 32, fontWeight: 'bold' }}>Expensify</Text>
+      </View>
+      <View style={{ alignItems: 'center' }}>
+        <TextInput
+          style={{ width: '90%' }}
+          mode="outlined"
+          label="UserName"
+          textContentType="username"
+          value={formData.username}
+          onChangeText={text => _onChange(text, 'username')}
+        />
+        <HelperText type="error" visible={hasErrors('username')}>
+          UserName is required
+        </HelperText>
+      </View>
+      <View style={{ alignItems: 'center' }}>
+        <TextInput
+          style={{ width: '90%' }}
+          mode="outlined"
+          label="Email"
+          autoCapitalize="none"
+          textContentType="emailAddress"
+          value={formData.email}
+          onChangeText={text => _onChange(text, 'email')}
+        />
+        <HelperText type="error" visible={hasErrors('email')}>
+          {formData.email.length == 0
+            ? `Email is required`
+            : `Email is not valid`}
+        </HelperText>
+      </View>
+      <View style={{ alignItems: 'center' }}>
+        <TextInput
+          style={{ width: '90%' }}
+          mode="outlined"
+          textContentType="password"
+          secureTextEntry={true}
+          label="Password"
+          value={formData.password1}
+          onChangeText={text => _onChange(text, 'password1')}
+        />
+        <HelperText type="error" visible={hasErrors('password1')}>
+          Password is required
+        </HelperText>
+      </View>
+      <View style={{ alignItems: 'center' }}>
+        <TextInput
+          style={{ width: '90%' }}
+          mode="outlined"
+          textContentType="password"
+          secureTextEntry={true}
+          label="Confirm Password"
+          value={formData.password2}
+          onChangeText={text => _onChange(text, 'password2')}
+        />
+        <HelperText type="error" visible={hasErrors('password2')}>
+          Password is required
+        </HelperText>
+      </View>
+      <View style={{ alignItems: 'center' }}>
+        <Button
+          style={{
+            backgroundColor: '#00a2ed',
+            width: '80%'
+          }}
+          mode="contained"
+          onPress={onRegister}
+        >
+          Register
+        </Button>
+      </View>
     </View>
   )
 }

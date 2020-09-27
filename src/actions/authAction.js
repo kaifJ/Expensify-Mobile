@@ -32,12 +32,13 @@ export const register = ({ name, email, password }) => async dispatch => {
 
     dispatch({
       type: 'SET_LOADING',
-      loading: true
+      loading: false
     })
     dispatch({
       type: REGISTER_SUCCESS,
       payload: { token: res.data.token }
     })
+    dispatch(loadExpenses())
   } catch (error) {
     const errorMsg = error.response.data
     // dispatch(setAlert(errorMsg, 'danger'))

@@ -6,7 +6,7 @@ import moment from 'moment'
 import { toggleModal } from '../actions/modalAction'
 import { deleteExpense } from '../actions/expenseAction'
 import { View, Text, FlatList, SafeAreaView, Alert } from 'react-native'
-import { Card, Title, Button } from 'react-native-paper'
+import { Card, Title, Button, Divider } from 'react-native-paper'
 
 const ExpenseList = props => {
   let renderItem = ({ item }) => {
@@ -15,7 +15,6 @@ const ExpenseList = props => {
     }
 
     let onDelete = () => {
-      debugger
       Alert.alert('Delete Expense ?', '', [
         {
           text: 'Cancel',
@@ -30,40 +29,43 @@ const ExpenseList = props => {
     }
 
     return (
-      <Card style={{ marginVertical: 5, backgroundColor: '#DCDCDC' }}>
-        <Card.Content>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end'
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <Title>{`₹${item.amount}`}</Title>
-              <Text>{moment(item.date).format('ddd MMM DD YYYY')}</Text>
-              <Text>{item.description}</Text>
-              <Text>{item.category}</Text>
+      <View style={{ flexDirection: 'column' }}>
+        <Card style={{ marginVertical: 5, backgroundColor: '#DCDCDC' }}>
+          <Card.Content>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Title>{`₹${item.amount}`}</Title>
+                <Text>{moment(item.date).format('ddd MMM DD YYYY')}</Text>
+                <Text>{item.description}</Text>
+                <Text>{item.category}</Text>
+              </View>
+              <View style={{ flex: 1, flexDirection: 'column' }}>
+                <Button
+                  style={{ backgroundColor: '#00a2ed', marginBottom: 10 }}
+                  mode="contained"
+                  onPress={editForm}
+                >
+                  Edit
+                </Button>
+                <Button
+                  style={{ backgroundColor: '#f44336' }}
+                  mode="contained"
+                  onPress={onDelete}
+                >
+                  Delete
+                </Button>
+              </View>
             </View>
-            <View style={{ flex: 1, flexDirection: 'column' }}>
-              <Button
-                style={{ backgroundColor: '#00a2ed', marginBottom: 10 }}
-                mode="contained"
-                onPress={editForm}
-              >
-                Edit
-              </Button>
-              <Button
-                style={{ backgroundColor: '#f44336' }}
-                mode="contained"
-                onPress={onDelete}
-              >
-                Delete
-              </Button>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
+          </Card.Content>
+        </Card>
+        <Divider style={{ backgroundColor: 'white' }} />
+      </View>
     )
   }
 

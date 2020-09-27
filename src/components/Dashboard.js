@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, ActivityIndicator, Text, Button } from 'react-native'
-import { Provider, Portal, Modal } from 'react-native-paper'
+import { View, ActivityIndicator } from 'react-native'
+import { Provider, Portal, Modal, Button, Appbar } from 'react-native-paper'
 import ExpenseForm from './ExpenseForm'
 import Header from './Header'
 import { connect } from 'react-redux'
@@ -16,6 +16,8 @@ const Dashboard = props => {
     props.toggleModal({ toggle: false })
     setVisible(false)
   }
+
+  const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
   return (
     <Provider>
       <Portal>
@@ -27,6 +29,11 @@ const Dashboard = props => {
           }}
         >
           <Header title={'Dashboard'} />
+          <Appbar.Header>
+            <Appbar.Content title="Title" subtitle={'Subtitle'} />
+            <Appbar.Action icon="magnify" onPress={() => {}} />
+            <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
+          </Appbar.Header>
           {props.loading ? (
             <View>
               <ActivityIndicator size="large" color="#000000" />
@@ -35,7 +42,11 @@ const Dashboard = props => {
             <ExpenseList />
           )}
           <Modal
-            contentContainerStyle={{ height: 500, width: 500 }}
+            contentContainerStyle={{
+              marginTop: '5%',
+              height: '90%',
+              width: '100%'
+            }}
             visible={visible}
             onDismiss={hideModal}
           >
@@ -43,6 +54,15 @@ const Dashboard = props => {
               modalId={props.modal.modalId}
               formType={props.modal.formType}
             />
+            <Button
+              style={{
+                backgroundColor: '#f44336'
+              }}
+              mode="contained"
+              onPress={hideModal}
+            >
+              Close
+            </Button>
           </Modal>
         </View>
       </Portal>

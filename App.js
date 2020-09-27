@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { connect } from 'react-redux'
 import { Snackbar } from 'react-native-paper'
 import { loadExpenses } from './src/actions/expenseAction'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 class App extends Component {
   state = {
@@ -64,6 +65,20 @@ class App extends Component {
     jsxToReturn = !(this.state.token || this.props.token) ? (
       <NavigationContainer>
         <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName
+
+              if (route.name === 'Login') {
+                iconName = focused ? 'log-in' : 'log-in-outline'
+              } else if (route.name === 'Register') {
+                iconName = focused ? 'person-add' : 'person-add-outline'
+              }
+
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />
+            }
+          })}
           tabBarOptions={{
             activeTintColor: 'tomato',
             inactiveTintColor: 'gray',
@@ -81,6 +96,22 @@ class App extends Component {
     ) : (
       <NavigationContainer>
         <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName
+
+              if (route.name === 'Dashboard') {
+                iconName = focused ? 'list-circle' : 'list-circle-outline'
+              } else if (route.name === 'Stats') {
+                iconName = focused ? 'stats-chart' : 'stats-chart-outline'
+              } else if (route.name === 'User') {
+                iconName = focused ? 'settings' : 'settings-outline'
+              }
+
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />
+            }
+          })}
           tabBarOptions={{
             activeTintColor: 'tomato',
             inactiveTintColor: 'gray',

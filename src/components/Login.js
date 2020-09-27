@@ -19,6 +19,7 @@ function Login({ navigation, login }) {
   }
 
   const onLogin = () => {
+    if (!isEmail(formData.email)) return alert('Please Enter a valid email')
     if (formData.email.length === 0 || formData.password.length === 0)
       return alert('Please fill the rquired Fields')
     login(formData)
@@ -46,6 +47,7 @@ function Login({ navigation, login }) {
       <View style={{ alignItems: 'center' }}>
         <TextInput
           style={{ width: '90%' }}
+          mode="outlined"
           label="Email"
           autoCapitalize="none"
           textContentType="emailAddress"
@@ -61,6 +63,7 @@ function Login({ navigation, login }) {
       <View style={{ alignItems: 'center' }}>
         <TextInput
           style={{ width: '90%' }}
+          mode="outlined"
           textContentType="password"
           secureTextEntry={true}
           label="Password"

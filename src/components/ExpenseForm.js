@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, TextInput, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { Button } from 'react-native-paper'
+import { Button, TextInput, HelperText, Card } from 'react-native-paper'
 import { addExpense, editExpense } from '../actions/expenseAction'
 import moment from 'moment'
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -23,6 +23,12 @@ class ExpenseForm extends React.Component {
   }
 
   onFormSubmit = () => {
+    if (
+      this.state.amount.length === 0 ||
+      this.state.description.length === 0 ||
+      this.state.category.length == 0
+    )
+      return alert('Please fill the required fields')
     this.setState({ buttonLoading: true })
 
     let formData = {
@@ -36,6 +42,10 @@ class ExpenseForm extends React.Component {
     this.props.formType === 'edit'
       ? this.props.editExpense(formData, this.props.expense._id)
       : this.props.addExpense(formData, moment())
+  }
+
+  hasErrors = field => {
+    return this.state[field].length === 0
   }
 
   render() {
@@ -94,77 +104,146 @@ class ExpenseForm extends React.Component {
       this.props.formType === 'edit' ? 'EDIT EXPENSE' : 'ADD EXPENSE'
 
     return (
-      <View
+      <Card
         style={{
-          backgroundColor: 'white',
-          alignItems: 'center',
-          height: 500,
-          width: 500
+          // backgroundColor: '#D3D3D3',
+          backgroundColor: '#4CAF50',
+          height: '100%',
+          width: '100%',
+          padding: 0
         }}
       >
-        <TextInput
-          placeholder="Amount"
-          id="amount"
-          value={`${this.state.amount}`}
-          onChange={value => this.setState({ amount: value.nativeEvent.text })}
-        />
-        <TextInput
-          placeholder="Title"
-          id="title"
-          value={this.state.title}
-          onChange={value => this.setState({ title: value.nativeEvent.text })}
-        />
-        <TextInput
-          placeholder="Description"
-          id="description"
-          value={this.state.description}
-          onChange={value =>
-            this.setState({ description: value.nativeEvent.text })
-          }
-        />
-        <DropDownPicker
-          items={categoryData}
-          containerStyle={{ height: 40, width: '50%' }}
-          placeholder="Select Category"
-          style={{ backgroundColor: '#fafafa' }}
-          itemStyle={{
-            justifyContent: 'flex-start'
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'space-between'
           }}
-          dropDownStyle={{ backgroundColor: '#fafafa' }}
-          onChangeItem={item => this.setState({ category: item.value })}
-        />
-        <DatePicker
-          style={{ width: 200 }}
-          date={this.state.date}
-          mode="date"
-          placeholder="select date"
-          format="DD-MM-YYYY"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              left: 0,
-              top: 4,
-              marginLeft: 0
-            },
-            dateInput: {
-              marginLeft: 36
-            }
-          }}
-          onDateChange={date => {
-            this.setState({ date: moment(date, 'DD-MM-YYYY') })
-          }}
-        />
-        <Button
-          loading={this.state.buttonLoading}
-          style={{ backgroundColor: '#00a2ed', marginBottom: 10 }}
-          mode="contained"
-          onPress={this.onFormSubmit}
         >
-          {buttonText}
-        </Button>
-      </View>
+          <View>
+            <Text style={{ fontSize: 32, fontWeight: 'bold', marginBottom: 5 }}>
+              {buttonText}
+            </Text>
+            <View>
+              <TextInput
+                style={{ width: '80%', backgroundColor: '#D3D3D3' }}
+                mode="outlined"
+                label="Amount"
+                theme={{
+                  roundness: 50
+                }}
+                keyboardType="number-pad"
+                value={`${this.state.amount}`}
+                onChange={value =>
+                  this.setState({ amount: value.nativeEvent.text })
+                }
+              />
+              <HelperText type="error" visible={this.hasErrors('amount')}>
+                Amount is required
+              </HelperText>
+            </View>
+            <View>
+              <TextInput
+                style={{ width: '80%', backgroundColor: '#D3D3D3' }}
+                mode="outlined"
+                theme={{
+                  roundness: 50
+                }}
+                label="Title"
+                value={`${this.state.title}`}
+                onChange={value =>
+                  this.setState({ title: value.nativeEvent.text })
+                }
+              />
+              <HelperText type="error" visible={false}>
+                Title is required
+              </HelperText>
+            </View>
+            <View>
+              <TextInput
+                style={{ width: '80%', backgroundColor: '#D3D3D3' }}
+                mode="outlined"
+                label="Description"
+                theme={{
+                  roundness: 50
+                }}
+                value={`${this.state.description}`}
+                onChange={value =>
+                  this.setState({ description: value.nativeEvent.text })
+                }
+              />
+              <HelperText type="error" visible={this.hasErrors('description')}>
+                Description is required
+              </HelperText>
+            </View>
+            <View>
+              <DatePicker
+                style={{
+                  width: 200,
+                  backgroundColor: '#D3D3D3',
+                  marginLeft: '1%'
+                }}
+                date={this.state.date}
+                mode="date"
+                placeholder="select date"
+                format="DD-MM-YYYY"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                }}
+                onDateChange={date => {
+                  this.setState({ date: moment(date, 'DD-MM-YYYY') })
+                }}
+              />
+              <HelperText type="error" visible={this.hasErrors('date')}>
+                Date is required
+              </HelperText>
+            </View>
+            <View>
+              <DropDownPicker
+                items={categoryData}
+                containerStyle={{
+                  height: '25%',
+                  width: '80%'
+                }}
+                placeholder="Select Category"
+                style={{
+                  backgroundColor: '#D3D3D3'
+                }}
+                itemStyle={{
+                  justifyContent: 'flex-start'
+                }}
+                dropDownStyle={{ backgroundColor: '#D3D3D3' }}
+                onChangeItem={item => this.setState({ category: item.value })}
+              />
+              <HelperText type="error" visible={this.hasErrors('category')}>
+                Category is required
+              </HelperText>
+            </View>
+          </View>
+          <View>
+            <Button
+              style={{
+                backgroundColor: '#00a2ed'
+              }}
+              loading={this.state.buttonLoading}
+              mode="contained"
+              onPress={this.onFormSubmit}
+            >
+              {buttonText}
+            </Button>
+          </View>
+        </View>
+      </Card>
     )
   }
 }
