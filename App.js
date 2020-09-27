@@ -63,14 +63,34 @@ class App extends Component {
       )
     jsxToReturn = !(this.state.token || this.props.token) ? (
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator
+          tabBarOptions={{
+            activeTintColor: 'tomato',
+            inactiveTintColor: 'gray',
+            labelStyle: {
+              fontSize: 15,
+              margin: 0,
+              padding: 0
+            }
+          }}
+        >
           <Tab.Screen name="Login" component={Login} />
           <Tab.Screen name="Register" component={Register} />
         </Tab.Navigator>
       </NavigationContainer>
     ) : (
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator
+          tabBarOptions={{
+            activeTintColor: 'tomato',
+            inactiveTintColor: 'gray',
+            labelStyle: {
+              fontSize: 15,
+              margin: 0,
+              padding: 0
+            }
+          }}
+        >
           <Tab.Screen name="Dashboard" component={Dashboard} />
           <Tab.Screen name="Stats" component={Stats} />
           <Tab.Screen name="User" component={User} />

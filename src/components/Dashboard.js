@@ -43,7 +43,6 @@ const Dashboard = props => {
               modalId={props.modal.modalId}
               formType={props.modal.formType}
             />
-            <Button onPress={hideModal} title="Close" />
           </Modal>
         </View>
       </Portal>
