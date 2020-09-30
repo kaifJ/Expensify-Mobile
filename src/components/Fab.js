@@ -30,6 +30,7 @@ import { Text, View } from 'react-native'
 import { Button } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { toggleModal } from '../actions/modalAction'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const Fab = ({ toggleModal }) => {
   const showModal = () => {
@@ -37,19 +38,50 @@ const Fab = ({ toggleModal }) => {
   }
 
   return (
-    <View style={{ alignItems: 'center' }}>
-      <Button
-        style={{
-          backgroundColor: '#555555',
-          width: '90%',
-          borderRadius: 20,
-          marginTop: 10,
-          marginBottom: 10
-        }}
-        onPress={showModal}
-      >
-        <Text style={{ color: 'white' }}>Add Expense</Text>
-      </Button>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View>
+        <Button
+          icon={() => <Icon name="plus" size={18} color="white" />}
+          style={{
+            backgroundColor: '#4CAF50',
+            borderRadius: 20,
+            marginTop: 10,
+            marginBottom: 10
+          }}
+          onPress={showModal}
+        >
+          <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+            Add
+          </Text>
+        </Button>
+      </View>
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          style={{
+            backgroundColor: 'blue',
+            borderRadius: 20,
+            marginTop: 10,
+            marginBottom: 10
+          }}
+        >
+          <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+            Month
+          </Text>
+        </Button>
+        <Button
+          style={{
+            backgroundColor: 'blue',
+            borderRadius: 20,
+            marginTop: 10,
+            marginBottom: 10
+          }}
+          mode="contained"
+        >
+          <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+            Clear Filters
+          </Text>
+        </Button>
+      </View>
     </View>
   )
 }

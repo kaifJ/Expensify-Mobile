@@ -1,8 +1,14 @@
 import React from 'react'
-import { View, ActivityIndicator } from 'react-native'
-import { Provider, Portal, Modal, Button, Appbar } from 'react-native-paper'
+import { View, ActivityIndicator, Text } from 'react-native'
+import {
+  Provider,
+  Portal,
+  Modal,
+  Button,
+  Searchbar,
+  Appbar
+} from 'react-native-paper'
 import ExpenseForm from './ExpenseForm'
-import Header from './Header'
 import { connect } from 'react-redux'
 import ExpenseList from './ExpenseList'
 import { toggleModal } from '../actions/modalAction'
@@ -17,7 +23,9 @@ const Dashboard = props => {
     setVisible(false)
   }
 
-  const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical'
+  const [searchQuery, setSearchQuery] = React.useState('')
+
+  const onChangeSearch = query => setSearchQuery(query)
   return (
     <Provider>
       <Portal>
@@ -25,14 +33,57 @@ const Dashboard = props => {
           style={{
             flex: 1,
             flexDirection: 'column',
-            backgroundColor: '#4CAF50'
+            // backgroundColor: '#CCFFCC'
+            backgroundColor: '#DCDCDC'
           }}
         >
-          <Header title={'Dashboard'} />
           <Appbar.Header>
-            <Appbar.Content title="Title" subtitle={'Subtitle'} />
-            <Appbar.Action icon="magnify" onPress={() => {}} />
-            <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
+            <Searchbar
+              style={{
+                backgroundColor: '#D3D3D3',
+                width: '50%',
+                height: '80%',
+                marginRight: 5
+              }}
+              theme={{
+                colors: {
+                  text: 'black'
+                }
+              }}
+              placeholder="Search"
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+            />
+            <Button
+              icon="arrow-up"
+              style={{
+                backgroundColor: '#D3D3D3',
+                height: '80%',
+                width: '23%',
+                marginLeft: 0,
+                marginRight: 0,
+                justifyContent: 'center',
+                marginRight: 5
+              }}
+              mode="contained"
+            >
+              Amount
+            </Button>
+            <Button
+              icon="arrow-up"
+              style={{
+                backgroundColor: '#D3D3D3',
+                height: '80%',
+                width: '23%',
+                marginLeft: 0,
+                marginRight: 0,
+                justifyContent: 'center',
+                marginRight: 1
+              }}
+              mode="contained"
+            >
+              Date
+            </Button>
           </Appbar.Header>
           {props.loading ? (
             <View>
@@ -43,10 +94,11 @@ const Dashboard = props => {
           )}
           <Modal
             contentContainerStyle={{
-              marginTop: '5%',
-              height: '90%',
+              marginTop: '25 %',
+              height: '70%',
               width: '100%'
             }}
+            animationType={'slide'}
             visible={visible}
             onDismiss={hideModal}
           >
@@ -61,7 +113,11 @@ const Dashboard = props => {
               mode="contained"
               onPress={hideModal}
             >
-              Close
+              <Text
+                style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}
+              >
+                Close
+              </Text>
             </Button>
           </Modal>
         </View>

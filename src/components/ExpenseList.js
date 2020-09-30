@@ -30,7 +30,12 @@ const ExpenseList = props => {
 
     return (
       <View style={{ flexDirection: 'column' }}>
-        <Card style={{ marginVertical: 5, backgroundColor: '#DCDCDC' }}>
+        <Card
+          style={{
+            marginVertical: 5,
+            backgroundColor: 'white'
+          }}
+        >
           <Card.Content>
             <View
               style={{
@@ -40,10 +45,9 @@ const ExpenseList = props => {
               }}
             >
               <View style={{ flex: 1 }}>
-                <Title>{`₹${item.amount}`}</Title>
+                <Title style={{ color: 'black' }}>{`₹${item.amount}`}</Title>
                 <Text>{moment(item.date).format('ddd MMM DD YYYY')}</Text>
                 <Text>{item.description}</Text>
-                <Text>{item.category}</Text>
               </View>
               <View style={{ flex: 1, flexDirection: 'column' }}>
                 <Button

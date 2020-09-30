@@ -75,8 +75,8 @@ class ExpenseForm extends React.Component {
         value: 'household'
       },
       {
-        label: 'FOAPPARELOD',
-        value: 'fapparelood'
+        label: 'Apparel',
+        value: 'apparel'
       },
       {
         label: 'BEAUTY',
@@ -101,13 +101,12 @@ class ExpenseForm extends React.Component {
     ]
 
     let buttonText =
-      this.props.formType === 'edit' ? 'EDIT EXPENSE' : 'ADD EXPENSE'
+      this.props.formType === 'edit' ? 'UPDATE EXPENSE' : 'ADD EXPENSE'
 
     return (
       <Card
         style={{
-          // backgroundColor: '#D3D3D3',
-          backgroundColor: '#4CAF50',
+          backgroundColor: 'white',
           height: '100%',
           width: '100%',
           padding: 0
@@ -121,19 +120,32 @@ class ExpenseForm extends React.Component {
           }}
         >
           <View>
-            <Text style={{ fontSize: 32, fontWeight: 'bold', marginBottom: 5 }}>
-              {buttonText}
-            </Text>
+            <View style={{ marginBottom: 10, alignItems: 'center' }}>
+              <Text
+                style={{
+                  fontSize: 32,
+                  fontWeight: 'bold'
+                }}
+              >
+                {buttonText}
+              </Text>
+            </View>
             <View>
               <TextInput
-                style={{ width: '80%', backgroundColor: '#D3D3D3' }}
+                style={{
+                  width: '80%',
+                  backgroundColor: '#D3D3D3'
+                }}
                 mode="outlined"
                 label="Amount"
                 theme={{
-                  roundness: 50
+                  roundness: 50,
+                  colors: {
+                    text: 'black'
+                  }
                 }}
                 keyboardType="number-pad"
-                value={`${this.state.amount}`}
+                value={`₹${this.state.amount}`}
                 onChange={value =>
                   this.setState({ amount: value.nativeEvent.text })
                 }
@@ -147,7 +159,10 @@ class ExpenseForm extends React.Component {
                 style={{ width: '80%', backgroundColor: '#D3D3D3' }}
                 mode="outlined"
                 theme={{
-                  roundness: 50
+                  roundness: 50,
+                  colors: {
+                    text: 'black'
+                  }
                 }}
                 label="Title"
                 value={`${this.state.title}`}
@@ -165,7 +180,10 @@ class ExpenseForm extends React.Component {
                 mode="outlined"
                 label="Description"
                 theme={{
-                  roundness: 50
+                  roundness: 50,
+                  colors: {
+                    text: 'black'
+                  }
                 }}
                 value={`${this.state.description}`}
                 onChange={value =>
@@ -215,6 +233,7 @@ class ExpenseForm extends React.Component {
                   height: '25%',
                   width: '80%'
                 }}
+                defaultValue={this.state.category}
                 placeholder="Select Category"
                 style={{
                   backgroundColor: '#D3D3D3'
@@ -233,13 +252,17 @@ class ExpenseForm extends React.Component {
           <View>
             <Button
               style={{
-                backgroundColor: '#00a2ed'
+                backgroundColor: '#4CAF50'
               }}
               loading={this.state.buttonLoading}
               mode="contained"
               onPress={this.onFormSubmit}
             >
-              {buttonText}
+              <Text
+                style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}
+              >
+                {buttonText}
+              </Text>
             </Button>
           </View>
         </View>
