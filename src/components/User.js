@@ -6,7 +6,10 @@ import { logout } from '../actions/authAction'
 import { connect } from 'react-redux'
 
 const User = ({ logout }) => {
+  const [loading, setLoading] = React.useState(false)
+
   const onLogout = () => {
+    setLoading(true)
     logout()
   }
   return (
@@ -20,6 +23,7 @@ const User = ({ logout }) => {
         }}
       >
         <Button
+          loading={loading}
           icon="logout"
           style={{
             backgroundColor: '#00a2ed',

@@ -87,12 +87,12 @@ export const login = ({ email, password }) => async dispatch => {
 }
 
 export const logout = () => async dispatch => {
-  dispatch({
-    type: LOGOUT
-  })
   try {
     debugger
     await axios.post('https://calm-hollows-17096.herokuapp.com/api/user/logout')
+    dispatch({
+      type: LOGOUT
+    })
   } catch (error) {
     debugger
     let e = error
@@ -112,5 +112,12 @@ export const setExpenseLoading = loading => dispatch => {
   dispatch({
     type: SET_EXPENSE_LOADING,
     loading
+  })
+}
+
+export const setToken = token => dispatch => {
+  dispatch({
+    type: LOGIN_SUCCESS,
+    payload: { token: token }
   })
 }

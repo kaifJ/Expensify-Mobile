@@ -7,26 +7,26 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { connect } from 'react-redux'
 import { Snackbar } from 'react-native-paper'
+import { setToken } from './src/actions/authAction'
 import { loadExpenses } from './src/actions/expenseAction'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 class App extends Component {
   state = {
-    token: this.props.token,
-    loading: this.props.token || true,
-    isAuthenticated: this.props.isAuthenticated
+    loading: this.props.token || true
   }
 
   async init() {
     try {
       let userToken = await AsyncStorage.getItem('token')
       userToken = userToken === undefined || userToken === null ? '' : userToken
-      if (userToken) this.props.loadExpenses()
+      if (userToken) {
+        this.props.setToken(userToken)
+        this.props.loadExpenses()
+      }
       await setAuthToken(userToken)
       this.setState({
-        token: userToken,
-        loading: false,
-        isAuthenticated: !!userToken
+        loading: false
       })
     } catch (e) {}
   }
@@ -62,7 +62,7 @@ class App extends Component {
           </Snackbar>
         </View>
       )
-    jsxToReturn = !(this.state.token || this.props.token) ? (
+    jsxToReturn = !this.props.token ? (
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -139,4 +139,4 @@ const mapStateToProps = ({ auth }) => ({
   token: auth.token
 })
 
-export default connect(mapStateToProps, { loadExpenses })(App)
+export default connect(mapStateToProps, { loadExpenses, setToken })(App)
