@@ -36,6 +36,7 @@ export const editExpense = (updatedExpense, id, history) => async dispatch => {
     // history.push('/dashboard')
     // dispatch(setAlert('Expense Updated', 'edit'))
   } catch (error) {
+    debugger
     // dispatch(setAlert('Some Error Look into this', 'danger'))
   }
 }
@@ -68,9 +69,10 @@ export const addExpense = (
     // history.push('/dashboard')
     // dispatch(setAlert('Expense Added', 'success'))
   } catch (error) {
-    let errors = error.response.data.errors
-
-    errors.forEach(error => dispatch(setAlert(error, 'danger')))
+    let errors = error.response?.data?.errors || error.message
+    alert('Could not Add expense. Please Check network ')
+    debugger
+    // errors.forEach(error => dispatch(setAlert(error, 'danger')))
     // dispatch(setAlert('Could Not Add Expense, Please Contact admin', 'danger'))
   }
 }
@@ -87,6 +89,8 @@ export const deleteExpense = id => async dispatch => {
     })
     // dispatch(setAlert('Expense Deleted', 'danger'))
   } catch (error) {
+    debugger
+    alert('Could not delete expense. Please Check network ')
     // dispatch(setAlert('Some Error Look Into this', 'danger'))
   }
 }
@@ -115,7 +119,8 @@ export const loadExpenses = () => async dispatch => {
       payload: { expenses: res.data.expenses }
     })
   } catch (error) {
-    let errors = error.response.data
+    let errors = error.response ? error.response.data : error.message
+    alert('Something went wrong. Please Check network')
     // dispatch(setAlert(errors, 'danger'))
   }
 }
@@ -138,7 +143,9 @@ export const loadMonthlyExpenses = payload => async dispatch => {
       payload: { expenses: res.data.expenses }
     })
   } catch (error) {
-    let errors = error.response.data
+    let errors = error.response ? error.response.data : error.message
+    alert('Something went wrong. Please Check network')
+    debugger
     // dispatch(setAlert(errors, 'danger'))
   }
 }

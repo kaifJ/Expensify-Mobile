@@ -83,7 +83,7 @@ class App extends Component {
             activeTintColor: 'tomato',
             inactiveTintColor: 'gray',
             labelStyle: {
-              fontSize: 15,
+              fontSize: 14,
               margin: 0,
               padding: 0
             }
@@ -116,7 +116,7 @@ class App extends Component {
             activeTintColor: 'tomato',
             inactiveTintColor: 'gray',
             labelStyle: {
-              fontSize: 15,
+              fontSize: 14,
               margin: 0,
               padding: 0
             }

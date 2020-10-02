@@ -1,21 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
+import { Appbar } from 'react-native-paper'
 
 const Header = props => {
   return (
-    <View
-      style={{
-        backgroundColor: '#20222b',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        width: '100%'
-      }}
-    >
-      <Text style={{ color: 'white', fontSize: 32, fontWeight: 'bold' }}>
-        {props.title}
-      </Text>
-    </View>
+    <Appbar.Header style={{ backgroundColor: 'black' }}>
+      <Appbar.Content title={props.title} />
+    </Appbar.Header>
   )
 }
 

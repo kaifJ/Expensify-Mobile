@@ -40,9 +40,8 @@ export const register = ({ name, email, password }) => async dispatch => {
     })
     dispatch(loadExpenses())
   } catch (error) {
-    const errorMsg = error.response.data
-    // dispatch(setAlert(errorMsg, 'danger'))
-
+    const errorMsg = error.response ? error.response.data : error.message
+    alert(errorMsg)
     dispatch({
       type: REGISTER_FAILURE
     })
@@ -79,9 +78,8 @@ export const login = ({ email, password }) => async dispatch => {
     })
     dispatch(loadExpenses())
   } catch (error) {
-    const errorMsg = error.response.data
-    // dispatch(setAlert(errorMsg, 'danger'))
-
+    const errorMsg = error.response ? error.response.data : error.message
+    alert(errorMsg)
     dispatch({
       type: LOGIN_FAILURE
     })
@@ -93,8 +91,12 @@ export const logout = () => async dispatch => {
     type: LOGOUT
   })
   try {
+    debugger
     await axios.post('https://calm-hollows-17096.herokuapp.com/api/user/logout')
   } catch (error) {
+    debugger
+    let e = error
+    debugger
     //    dispatch(setAlert('Could Not Log Out Please check '))
   }
 }
